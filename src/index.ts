@@ -1,11 +1,7 @@
 import { randomPostFromSub, post } from "justreddit";
+import parseUrl from "parse-url";
 
 async function getMeme(nsfw = true): Promise<post> {
-  // let post = await randomPostFromSub({
-  //   subReddit: "memes",
-  //   postGetLimit: 1000,
-  // });
-
   let post: post;
 
   do {
@@ -26,39 +22,14 @@ async function getMeme(nsfw = true): Promise<post> {
 
 export default {
   async fetch(request: Request) {
-    const path = request.url.substring(request.url.lastIndexOf("/"));
-
-    if (path.includes("/meme")) {
-      if (path.includes("nsfw=")) {
-        const nsfwString = request.url.substring(request.url.indexOf("=") + 1);
-
-        try {
-          const nsfw = JSON.parse(nsfwString);
-          const meme = await getMeme(nsfw);
-          return new Response(JSON.stringify(meme, null, 4));
-        } catch (error) {
-          const errorRes = {
-            message: "Invalid value for nsfw!",
-            paths: [
-              {
-                name: "/meme",
-                description: "Get a meme.",
-                options: [
-                  {
-                    name: "nsfw",
-                    description:
-                      "Wether you allow nsfw memes or not. default: true",
-                    optional: true,
-                  },
-                ],
-              },
-            ],
-          };
-          return new Response(JSON.stringify(errorRes, null, 4));
-        }
+    const parsedUrl = parseUrl(request.url);
+    if (parsedUrl.pathname == "/meme") {
+      if (parsedUrl.query["nsfw"] == false) {
+        const meme = await getMeme(parsedUrl.query["nsfw"]);
+        return new Response(JSON.stringify(meme, null, 4));
       }
 
-      const meme = await getMeme(true);
+      const meme = await getMeme();
       return new Response(JSON.stringify(meme, null, 4));
     }
 
