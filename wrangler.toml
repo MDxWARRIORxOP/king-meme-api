@@ -1,0 +1,4 @@
+name = "king-meme-api"
+main = "src/index.js"
+compatibility_date = "2023-04-07"
+node_compat = true

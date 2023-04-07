@@ -1,0 +1,16 @@
+{
+  "name": "king-meme-api",
+  "version": "0.0.0",
+  "devDependencies": {
+    "wrangler": "2.14.0"
+  },
+  "private": true,
+  "scripts": {
+    "start": "wrangler dev",
+    "deploy": "wrangler publish"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "justreddit": "^4.2.0"
+  }
+}
