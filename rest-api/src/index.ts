@@ -1,7 +1,7 @@
 import { randomPostFromSub, post } from "justreddit";
 import parseUrl from "parse-url";
 
-async function getMeme(options: { sfw: boolean; ff: boolean }): Promise<post> {
+async function getMeme(options: { sfw: boolean }): Promise<post> {
   let post: post;
 
   do {
@@ -26,7 +26,6 @@ export default {
     if (parsedUrl.pathname == "/meme") {
       const options = {
         sfw: parsedUrl.query["sfw"] == true ? true : false,
-        ff: parsedUrl.query["ff"] == true ? true : false,
       };
 
       const meme = await getMeme(options);

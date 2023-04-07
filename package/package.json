@@ -1,0 +1,48 @@
+{
+  "name": "memes-api",
+  "version": "1.0.0",
+  "description": "A package that gets random reddit memes, just for you.",
+  "maintainers": [
+    "MDxWARRIORxOP <mohammedsiddiqui2009@gmail.com>"
+  ],
+  "scripts": {
+    "build": "bash ./build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MDxWARRIORxOP/king-meme-api.git"
+  },
+  "keywords": [
+    "memes",
+    "reddit memes",
+    "random memes",
+    "random reddit memes",
+    "funny memes",
+    "dank memes",
+    "api",
+    "memes api",
+    "random memes api"
+  ],
+  "author": "MDxWARRIORxOP <mohammedsiddiqui2009@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MDxWARRIORxOP/king-meme-api/issues"
+  },
+  "homepage": "https://github.com/MDxWARRIORxOP/king-meme-api#readme",
+  "main": "lib/cjs/index.js",
+  "types": "lib/types/index.d.ts",
+  "module": "lib/mjs/index.js",
+  "files": [
+    "lib"
+  ],
+  "exports": {
+    ".": {
+      "import": "./lib/mjs/index.js",
+      "require": "./lib/cjs/index.js"
+    }
+  },
+  "packageManager": "yarn@3.3.1",
+  "devDependencies": {
+    "typescript": "^4.9.4"
+  }
+}
