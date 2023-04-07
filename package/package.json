@@ -1,7 +1,7 @@
 {
   "name": "memes-api",
   "version": "1.0.0",
-  "description": "A package that gets random reddit memes, just for you.",
+  "description": "A package that gets random reddit memes, wihout any tokens or keys.",
   "maintainers": [
     "MDxWARRIORxOP <mohammedsiddiqui2009@gmail.com>"
   ],
