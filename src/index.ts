@@ -1,20 +1,20 @@
 import { randomPostFromSub, post } from "justreddit";
 import parseUrl from "parse-url";
 
-async function getMeme(nsfw = true): Promise<post> {
+async function getMeme(options: { sfw: boolean; ff: boolean }): Promise<post> {
   let post: post;
 
   do {
     post = await randomPostFromSub({ subReddit: "memes", postGetLimit: 1000 });
   } while (!post.image);
 
-  if ((nsfw = false)) {
+  if ((options.sfw = true)) {
     do {
       post = await randomPostFromSub({
         subReddit: "memes",
         postGetLimit: 1000,
       });
-    } while ((post.nsfw = true || !post.image));
+    } while ((post.nsfw = false || !post.image));
   }
 
   return post;
@@ -24,12 +24,12 @@ export default {
   async fetch(request: Request) {
     const parsedUrl = parseUrl(request.url);
     if (parsedUrl.pathname == "/meme") {
-      if (parsedUrl.query["nsfw"] == false) {
-        const meme = await getMeme(parsedUrl.query["nsfw"]);
-        return new Response(JSON.stringify(meme, null, 4));
-      }
+      const options = {
+        sfw: parsedUrl.query["sfw"] == true ? true : false,
+        ff: parsedUrl.query["ff"] == true ? true : false,
+      };
 
-      const meme = await getMeme();
+      const meme = await getMeme(options);
       return new Response(JSON.stringify(meme, null, 4));
     }
 
@@ -42,7 +42,14 @@ export default {
           options: [
             {
               name: "nsfw",
-              description: "Wether you allow nsfw memes or not. default: true",
+              description:
+                "Wether you want sfw memes or not. sfw means no sexual content.default: false",
+              optional: true,
+            },
+            {
+              name: "ff",
+              description:
+                "Wether you want family friendly memes or not. family friendly means no sexual content + no swearing. default false",
               optional: true,
             },
           ],
