@@ -1,129 +1,71 @@
 import { randomPostFromSub, post } from "justreddit";
 import parseUrl from "parse-url";
+
+async function getMeme(
+  sfw: boolean,
+  sortType: "new" | "top" | "hot" | "random" | "controversial" | "rising"
+) {
+  let result: post = await randomPostFromSub({
+    subReddit: "memes",
+    postGetLimit: 100,
+    sortType,
+  });
+
+  if ((sfw && result.nsfw) || !result.image) {
+    do {
+      result = await randomPostFromSub({
+        subReddit: "memes",
+        postGetLimit: 5,
+        sortType,
+      });
+    } while (result.nsfw || !result.image);
+  }
+
+  const returnObject = {
+    author: result.author,
+    commentAmount: result.commentAmount,
+    downvotes: result.downvotes,
+    image: result.image,
+    nsfw: result.nsfw,
+    thumbnail: result.thumbnail,
+    title: result.title,
+    upvotes: result.upvotes,
+    url: result.url,
+  };
+
+  return returnObject;
+}
+
 export default {
   async fetch(request: Request) {
     const parsedUrl = parseUrl(request.url);
     const sfw = parsedUrl.query.sfw == true;
+    
     switch (parsedUrl.pathname) {
       case "/v1/meme":
-        let post: post = await randomPostFromSub({
-          subReddit: "memes",
-          postGetLimit: 100,
-          sortType: "random",
-        });
-
-        if (sfw && post.nsfw) {
-          do {
-            post = await randomPostFromSub({
-              subReddit: "memes",
-              postGetLimit: 5,
-              sortType: "random",
-            });
-          } while (post.nsfw);
-        }
-        return new Response(JSON.stringify(post, null, 4));
+        return new Response(
+          JSON.stringify(await getMeme(sfw, "random"), null, 4)
+        );
       case "/v1/meme/random":
-        let postRand: post = await randomPostFromSub({
-          subReddit: "memes",
-          postGetLimit: 100,
-          sortType: "random",
-        });
-
-        if (sfw && postRand.nsfw) {
-          do {
-            post = await randomPostFromSub({
-              subReddit: "memes",
-              postGetLimit: 5,
-              sortType: "random",
-            });
-          } while (post.nsfw);
-        }
-        return new Response(JSON.stringify(postRand, null, 4));
+        return new Response(
+          JSON.stringify(await getMeme(sfw, "random"), null, 4)
+        );
       case "/v1/meme/hot":
-        let postHot: post = await randomPostFromSub({
-          subReddit: "memes",
-          postGetLimit: 100,
-          sortType: "hot",
-        });
-
-        if (sfw && postHot.nsfw) {
-          do {
-            post = await randomPostFromSub({
-              subReddit: "memes",
-              postGetLimit: 5,
-              sortType: "hot",
-            });
-          } while (post.nsfw);
-        }
-        return new Response(JSON.stringify(postHot, null, 4));
+        return new Response(JSON.stringify(await getMeme(sfw, "hot"), null, 4));
       case "/v1/meme/new":
-        let postNew: post = await randomPostFromSub({
-          subReddit: "memes",
-          postGetLimit: 100,
-          sortType: "random",
-        });
-
-        if (sfw && postNew.nsfw) {
-          do {
-            post = await randomPostFromSub({
-              subReddit: "memes",
-              postGetLimit: 5,
-              sortType: "new",
-            });
-          } while (post.nsfw);
-        }
-        return new Response(JSON.stringify(postNew, null, 4));
+        return new Response(JSON.stringify(await getMeme(sfw, "new"), null, 4));
       case "/v1/meme/top":
-        let postTop: post = await randomPostFromSub({
-          subReddit: "memes",
-          postGetLimit: 100,
-          sortType: "top",
-        });
-
-        if (sfw && postTop.nsfw) {
-          do {
-            post = await randomPostFromSub({
-              subReddit: "memes",
-              postGetLimit: 5,
-              sortType: "top",
-            });
-          } while (post.nsfw);
-        }
-        return new Response(JSON.stringify(postTop, null, 4));
+        return new Response(JSON.stringify(await getMeme(sfw, "top"), null, 4));
       case "/v1/meme/controversial":
-        let postCon: post = await randomPostFromSub({
-          subReddit: "memes",
-          postGetLimit: 100,
-          sortType: "controversial",
-        });
-
-        if (sfw && postCon.nsfw) {
-          do {
-            post = await randomPostFromSub({
-              subReddit: "memes",
-              postGetLimit: 5,
-              sortType: "controversial",
-            });
-          } while (post.nsfw);
-        }
-        return new Response(JSON.stringify(postCon, null, 4));
+        return new Response(
+          JSON.stringify(await getMeme(sfw, "controversial"), null, 4)
+        );
       case "/v1/meme/rising":
-        let postRising: post = await randomPostFromSub({
-          subReddit: "memes",
-          postGetLimit: 100,
-          sortType: "rising",
-        });
-
-        if (sfw && postRising.nsfw) {
-          do {
-            post = await randomPostFromSub({
-              subReddit: "memes",
-              postGetLimit: 5,
-              sortType: "rising",
-            });
-          } while (post.nsfw);
-        }
-        return new Response(JSON.stringify(postRising, null, 4));
+        return new Response(
+          JSON.stringify(await getMeme(sfw, "rising"), null, 4)
+        );
+      case "/favicon.ico":
+        return new Response("");
     }
 
     const indexPage = {
@@ -134,9 +76,8 @@ export default {
           description: "Get a random meme.",
           options: [
             {
-              name: "nsfw",
-              description:
-                "Wether you want sfw memes or not. sfw means no sexual content.default: false",
+              name: "sfw",
+              description: "Only SFW memes.",
               optional: true,
             },
           ],
@@ -147,8 +88,7 @@ export default {
           options: [
             {
               name: "nsfw",
-              description:
-                "Wether you want sfw memes or not. sfw means no sexual content.default: false",
+              description: "Only SFW memes.",
               optional: true,
             },
           ],
@@ -159,8 +99,7 @@ export default {
           options: [
             {
               name: "nsfw",
-              description:
-                "Wether you want sfw memes or not. sfw means no sexual content.default: false",
+              description: "Only SFW memes.",
               optional: true,
             },
           ],
@@ -171,8 +110,7 @@ export default {
           options: [
             {
               name: "nsfw",
-              description:
-                "Wether you want sfw memes or not. sfw means no sexual content.default: false",
+              description: "Only SFW memes.",
               optional: true,
             },
           ],
@@ -183,8 +121,7 @@ export default {
           options: [
             {
               name: "nsfw",
-              description:
-                "Wether you want sfw memes or not. sfw means no sexual content.default: false",
+              description: "Only SFW memes.",
               optional: true,
             },
           ],
@@ -195,8 +132,7 @@ export default {
           options: [
             {
               name: "nsfw",
-              description:
-                "Wether you want sfw memes or not. sfw means no sexual content.default: false",
+              description: "Only SFW memes.",
               optional: true,
             },
           ],
