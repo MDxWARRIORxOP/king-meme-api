@@ -1,5 +1,7 @@
-const memes = require("memes-api");
+const { default: getMeme } = require("memes-api");
 
-console.time("test");
-memes.getMeme({ sfw: true }).then(console.log);
-console.timeEnd("test");
+(async () => {
+  console.time("test");
+  await getMeme({ sfw: true });
+  console.timeEnd("test");
+})();

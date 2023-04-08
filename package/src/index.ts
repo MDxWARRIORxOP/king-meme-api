@@ -33,7 +33,7 @@ export interface Meme {
  * @constant
  * @see https://king-meme-api.mohammedsiddiqui2009.workers.dev/meme
  */
-export default async function getMeme(options: Options): Promise<Meme> {
+export async function getMeme(options: Options): Promise<Meme> {
   const SWF = typeof options.sfw == "function" ? options.sfw() : options.sfw;
   const res =
     SWF == false

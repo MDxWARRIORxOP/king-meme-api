@@ -5,12 +5,12 @@ Get random memes from reddit for free without any tokens or keys.
 # Examples:
 
 ```js
-import getMeme from "memes-api";
+import { getMeme } from "memes-api";
 
 // here sfw means 'Save for work' which means no sexual content.
 // if sfw == true, then there is not going to be any sexual content.
 // if sfw == false, then could be sexual content.
-const meme = getMemes({ sfw: true });
+const meme = getMeme({ sfw: true });
 
 console.log(meme);
 
