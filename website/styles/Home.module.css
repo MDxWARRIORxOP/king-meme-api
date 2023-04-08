@@ -1,0 +1,72 @@
+.mainGrid {
+  display: grid;
+  grid-template-columns: 1fr 0.2fr 1fr;
+}
+
+.left {
+  padding: 20px;
+  transition: 0.5s;
+  box-shadow: 0 8px 12px 0 rgba(0, 0, 0, 0.2);
+  height: 40vh;
+}
+
+.left:hover {
+  transition: 0.5s;
+  box-shadow: 0 8px 12px 0 aliceblue;
+}
+
+.right {
+  padding: 20px;
+  transition: 0.5s;
+  box-shadow: 0 8px 12px 0 rgba(0, 0, 0, 0.2);
+  height: 40vh;
+}
+
+.right:hover {
+  transition: 0.5s;
+  box-shadow: 0 8px 12px 0 aliceblue;
+}
+
+.buttonRight {
+  background-color: black;
+  color: aliceblue;
+  outline: none;
+  border: none;
+  border-radius: 3px;
+  transition: 1s color;
+  width: 120px;
+  height: auto;
+  margin-left: 20px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.buttonLeft {
+  background-color: black;
+  color: aliceblue;
+  outline: none;
+  border: none;
+  border-radius: 3px;
+  transition: 1s color;
+  width: 120px;
+  height: auto;
+  margin-left: 20px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.right:hover .buttonRight {
+  transition: 1s color;
+  background-color: aliceblue;
+  color: black;
+}
+
+.left:hover .buttonLeft {
+  transition: 1s color;
+  background-color: aliceblue;
+  color: black;
+}
+
+.OR {
+  height: 40vh;
+}
