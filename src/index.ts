@@ -11,14 +11,14 @@ async function getMeme(
     sortType,
   });
 
-  if ((sfw && result.nsfw) || !result.image) {
+  if (sfw && result.nsfw) {
     do {
       result = await randomPostFromSub({
         subReddit: "memes",
         postGetLimit: 5,
         sortType,
       });
-    } while (result.nsfw || !result.image);
+    } while (result.nsfw);
   }
 
   const returnObject = {
