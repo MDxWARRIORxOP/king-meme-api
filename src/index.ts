@@ -7,7 +7,7 @@ async function getMeme(
 ) {
   let result: post = await randomPostFromSub({
     subReddit: "memes",
-    postGetLimit: 100,
+    postGetLimit: 5,
     sortType,
   });
 
@@ -27,7 +27,6 @@ async function getMeme(
     downvotes: result.downvotes,
     image: result.image,
     nsfw: result.nsfw,
-    thumbnail: result.thumbnail,
     title: result.title,
     upvotes: result.upvotes,
     url: result.url,
@@ -40,7 +39,7 @@ export default {
   async fetch(request: Request) {
     const parsedUrl = parseUrl(request.url);
     const sfw = parsedUrl.query.sfw == true;
-    
+
     switch (parsedUrl.pathname) {
       case "/v1/meme":
         return new Response(
