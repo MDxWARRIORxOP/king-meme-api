@@ -22,6 +22,23 @@ export default {
           } while (post.nsfw);
         }
         return new Response(JSON.stringify(post, null, 4));
+      case "/v1/meme/random":
+        let postRand: post = await randomPostFromSub({
+          subReddit: "memes",
+          postGetLimit: 100,
+          sortType: "random",
+        });
+
+        if (sfw && postRand.nsfw) {
+          do {
+            post = await randomPostFromSub({
+              subReddit: "memes",
+              postGetLimit: 5,
+              sortType: "random",
+            });
+          } while (post.nsfw);
+        }
+        return new Response(JSON.stringify(postRand, null, 4));
       case "/v1/meme/hot":
         let postHot: post = await randomPostFromSub({
           subReddit: "memes",
