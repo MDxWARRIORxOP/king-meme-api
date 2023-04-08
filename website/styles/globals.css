@@ -4,9 +4,47 @@
   font-family: "Inter", sans-serif;
 }
 
+h1 {
+  font-size: 2vw;
+}
+
+h2 {
+  font-size: 1.8vw;
+}
+
+h3 {
+  font-size: 1.6vw;
+}
+
+h4 {
+  font-size: 1.4vw;
+}
+
+h5 {
+  font-size: 1.2vw;
+}
+
+p {
+  font-size: 1.2vw;
+}
+
+h6 {
+  font-size: 1vw;
+}
+
 body {
   background-color: #36393f;
   color: aliceblue;
+  margin: 0px;
+}
+
+code {
+  background-color: #eee;
+  border-radius: 3px;
+  font-family: courier, monospace;
+  font-size: inherit;
+  padding: 5px;
+  color: #36393f;
 }
 
 .center {
