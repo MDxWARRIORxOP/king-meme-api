@@ -1,5 +1,4 @@
 import { Router } from "itty-router";
-import { getMeme } from "./utils/getMeme";
 import { Res } from "./utils/res";
 import { getMemeHandler } from "./utils/getMemeHandler";
 
