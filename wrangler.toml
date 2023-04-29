@@ -1,4 +1,4 @@
-name = "king-meme-api"
+name = "memes-api"
 main = "src/index.ts"
 compatibility_date = "2023-04-07"
 node_compat = true
